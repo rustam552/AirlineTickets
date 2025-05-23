@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 text-center">
+        <h2 class="mb-4">Search for Flights</h2>
+        <form method="post" action="/flights/search" class="row g-3">
+            <div class="col-md-4">
+                <label for="departure" class="form-label">Departure City</label>
+                <input type="text" class="form-control" id="departure" name="departure" placeholder="e.g., PAR" required>
+            </div>
+            <div class="col-md-4">
+                <label for="destination" class="form-label">Destination City</label>
+                <input type="text" class="form-control" id="destination" name="destination" placeholder="e.g., NYC" required>
+            </div>
+            <div class="col-md-3">
+                <label for="date" class="form-label">Date</label>
+                <input type="date" class="form-control" id="date" name="date" required>
+            </div>
+            <div class="col-md-1 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary w-100">Search</button>
+            </div>
+        </form>
+        {% if flights %}
+        <h3 class="mt-4">Flight Results</h3>
+        <ul class="list-group">
+            {% for flight in flights %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>
+                    {{ flight.carrier }} {{ flight.flight_number }}:
+                    {{ flight.departure }} to {{ flight.destination }}
+                    ({{ flight.departure_time }} - {{ flight.arrival_time }})
+                </span>
+                <span class="badge bg-primary rounded-pill">
+                    {{ flight.price }} {{ flight.currency }}
+                </span>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
